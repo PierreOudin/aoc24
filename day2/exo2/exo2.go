@@ -2,30 +2,15 @@ package main
 
 import (
 	"fmt"
-	"io"
-	"log"
-	"math"
-	"os"
 	"strconv"
 	"strings"
+
+	"github.com/PierreOudin/adventofcode/day2/utils"
+	"github.com/PierreOudin/adventofcode/tools"
 )
 
 func main() {
-	file, err := os.Open("../input.txt")
-	if err != nil {
-		log.Fatalf("Erreur lors de l'ouverture du fichier : %v", err)
-	}
-	defer func() {
-		if err = file.Close(); err != nil {
-			log.Fatal(err)
-		}
-	}()
-
-	f, err := io.ReadAll(file)
-	if err != nil {
-		log.Fatalf("Erreur lors de la lecture du fichier : %v", err)
-	}
-	value := string(f)
+	value := tools.ParseFile("../input.txt")
 
 	var formattedLines [][]int
 
@@ -41,19 +26,16 @@ func main() {
 	var numSafeRow int = 0
 
 	for _, line := range formattedLines {
-		//fmt.Println(line)
-		if IsLineOnlyAscOrDesc(line) && IsLineOnlyInRange(line) {
-			//fmt.Println("Toto")
+		if utils.IsLineOnlyAscOrDesc(line) && utils.IsLineOnlyInRange(line) {
 			numSafeRow++
 		} else {
 			var testingLines [][]int
 			for index := 0; index < len(line); index++ {
-				removeIndexLine := RemoveIndex(line, index)
+				removeIndexLine := tools.RemoveIndex(line, index)
 				testingLines = append(testingLines, removeIndexLine)
 			}
-			fmt.Println(testingLines)
 			for _, testingLine := range testingLines {
-				if IsLineOnlyAscOrDesc(testingLine) && IsLineOnlyInRange(testingLine) {
+				if utils.IsLineOnlyAscOrDesc(testingLine) && utils.IsLineOnlyInRange(testingLine) {
 					numSafeRow++
 					break
 				}
@@ -62,32 +44,4 @@ func main() {
 	}
 
 	fmt.Printf("Row safe : %v", numSafeRow)
-}
-
-func IsLineOnlyAscOrDesc(line []int) bool {
-	var asc bool = true
-	var desc bool = true
-	for index := 0; index < len(line)-1; index++ {
-		asc = asc && (line[index] < line[index+1])
-		desc = desc && (line[index] > line[index+1])
-	}
-	return asc || desc
-}
-
-func IsLineOnlyInRange(line []int) bool {
-	var inRange bool = true
-	for index := 0; index < len(line)-1; index++ {
-		var diff int = int(math.Abs(float64(line[index] - line[index+1])))
-		if !(diff >= 1 && diff <= 3) {
-			inRange = false
-			break
-		}
-	}
-	return inRange
-}
-
-func RemoveIndex(s []int, index int) []int {
-	ret := make([]int, 0)
-	ret = append(ret, s[:index]...)
-	return append(ret, s[index+1:]...)
 }
