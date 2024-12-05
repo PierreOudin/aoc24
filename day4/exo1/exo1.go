@@ -37,38 +37,6 @@ func main() {
 		}
 	}
 
-	// for _, row := range horizontalRows {
-	// 	//fmt.Println(row)
-	// 	for index := 0; index < len(row); index++ {
-	// 		//fmt.Println(string(row[index]))
-	// 		verticalRows[index] += string(row[index])
-	// 	}
-
-	// 	// fmt.Println(r.FindAllString(row, -1))
-	// 	// fmt.Println(r.FindAllStringSubmatch(row, -1))
-
-	// 	submatch := r1.FindAllString(row, -1)
-	// 	total += len(submatch)
-	// 	submatch = r2.FindAllString(row, -1)
-	// 	total += len(submatch)
-	// }
-
-	// for _, row := range verticalRows {
-
-	// 	submatch := r1.FindAllString(row, -1)
-	// 	total += len(submatch)
-	// 	submatch = r2.FindAllString(row, -1)
-	// 	total += len(submatch)
-	// }
-
-	// submatch := r.FindAllString(value, -1)
-
-	// for _, group := range submatch {
-	// 	leftNumber, _ := strconv.Atoi(group[1])
-	// 	rightNumber, _ := strconv.Atoi(group[2])
-	// 	total += leftNumber * rightNumber
-	// }
-
 	fmt.Printf("Total : %v", total)
 }
 
