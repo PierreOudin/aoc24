@@ -1,14 +1,11 @@
 package tools
 
 import (
+	"bufio"
 	"io"
 	"log"
 	"os"
 )
-
-func tools() {
-
-}
 
 func ParseFile(path string) string {
 	file, err := os.Open(path)
@@ -26,6 +23,17 @@ func ParseFile(path string) string {
 		log.Fatalf("Erreur lors de la lecture du fichier : %v", err)
 	}
 	return string(f)
+}
+
+func ParseFileScanner(path string) *bufio.Scanner {
+	file, err := os.Open("../input.txt")
+	//file, err := os.Open("../example.txt")
+	if err != nil {
+		panic(err)
+	}
+	defer file.Close()
+
+	return bufio.NewScanner(file)
 }
 
 func RemoveIndex(s []int, index int) []int {
